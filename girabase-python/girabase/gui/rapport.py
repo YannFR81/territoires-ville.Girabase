@@ -1,4 +1,4 @@
-"""Note de calcul (PDF ou impression) aux couleurs de la charte graphique du Tarn."""
+"""Note de calcul (PDF ou impression)."""
 from __future__ import annotations
 
 import datetime as _dt
@@ -9,7 +9,7 @@ from typing import Optional
 from PySide6.QtCore import QMarginsF, QRectF, QSizeF, Qt, QUrl
 from PySide6.QtGui import QColor, QFont, QImage, QPageLayout, QPageSize, QPainter, QPdfWriter, QPen, QTextDocument
 
-from .. import formats as F
+from .. import DEVISE, formats as F
 from ..calcul import ResultatPeriode, flux
 from ..conseils import remarques_conception, remarques_fonctionnement, remarques_trafics
 from ..constantes import TE, TF1, TG, Milieu
@@ -23,10 +23,10 @@ ORANGE, BLEU, VERT, LIE = "#DD590A", "#5E99C5", "#179D87", "#7F0541"
 
 @dataclass
 class EnteteRapport:
-    """En-tête et pied de la note de calcul, à renseigner une fois pour toutes dans Fichier > Paramètres de la
-    note de calcul (par exemple « Département du Tarn — Direction des Routes »)."""
-    organisme: str = ""
-    service: str = ""
+    """En-tête et pied de la note de calcul, modifiables dans Fichier > Paramètres de la note de calcul
+    (organisme et service de la collectivité, par exemple)."""
+    organisme: str = "Girabase — capacité des carrefours giratoires"
+    service: str = DEVISE
     auteur: str = ""
     pied: str = ""
 

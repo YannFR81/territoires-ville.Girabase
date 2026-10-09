@@ -95,7 +95,7 @@ class Lieu:
 
 
 def url_recherche(texte: str, limite: int = 10, lat: Optional[float] = None, lon: Optional[float] = None) -> str:
-    """Géocodage IGN ; (lat, lon) favorise les résultats proches de la vue (le Tarn par défaut)."""
+    """Géocodage IGN ; (lat, lon) favorise les résultats proches de la vue affichée."""
     params = {"q": texte, "limit": limite}
     if lat is not None and lon is not None:
         params.update(lat=f"{lat:.5f}", lon=f"{lon:.5f}")

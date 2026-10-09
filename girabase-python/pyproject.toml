@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "girabase"
-version = "1.2.0"
+version = "1.2.1"
 description = "Calcul de capacité des carrefours giratoires — portage Python de GIRABASE 4 (CERTU/CEREMA)"
 readme = "README.md"
 license = { text = "GPL-3.0-or-later" }

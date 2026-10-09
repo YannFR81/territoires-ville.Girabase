@@ -8,7 +8,7 @@ from typing import Union
 from .projections import point_azimut
 from .site import SiteCarto
 
-# Couleurs KML : aabbggrr — charte du Tarn
+# Couleurs KML : aabbggrr — mêmes couleurs que le schéma
 ORANGE, VERT, BLEU, LIE, BLANC = "ff0a59dd", "ff879d17", "ffc5995e", "ff41057f", "ffffffff"
 
 

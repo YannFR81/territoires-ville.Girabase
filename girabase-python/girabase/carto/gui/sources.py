@@ -18,7 +18,7 @@ def texte_sources() -> str:
 <p>La localisation du giratoire utilise les services publics de la <b>Géoplateforme de l'IGN</b>
 (<code>data.geopf.fr</code>) et, en option, les tuiles d'<b>OpenStreetMap</b>. Les images et les objets sont
 lus à la demande, pour la zone affichée, puis gardés dans un cache local. Seuls deux petits extraits de la
-BD TOPO® (deux carrefours du Tarn, extraits le 9 octobre 2026) sont embarqués pour l'auto-contrôle hors
+BD TOPO® (deux carrefours réels, extraits le 9 octobre 2026) sont embarqués pour l'auto-contrôle hors
 ligne.</p>
 <table border="1" cellspacing="0" cellpadding="4">
 <tr><th>Usage dans Girabase</th><th>Données / service</th><th>Producteur</th><th>Licence</th></tr>

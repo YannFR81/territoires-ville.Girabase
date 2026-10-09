@@ -1,5 +1,7 @@
 # Girabase — portage Python (version 1.2)
 
+*L’intelligence artificielle au service de l’action publique efficiente.*
+
 Calcul de capacité des carrefours giratoires : réserve de capacité, temps d'attente, longueurs de file,
 conseils de conception et de fonctionnement, courbes de capacité, diagramme de flux, note de calcul PDF et
 export du schéma vers AutoCAD / COVADIS. **Nouveau en 1.2 :** localisation du giratoire sur la carte de l'IGN,
@@ -34,7 +36,7 @@ résultats du cas de référence du guide Girabase 4 sont reproduits à l'identi
 | Résultats | trafic entrant, trafic gênant, capacité, réserve en uvp/h et en %, files moyenne et maximale, attente moyenne et totale, « saturer la branche » |
 | Conseils | tous les contrôles, recommandations et conseils de Girabase 4 (conception, trafics, fonctionnement) |
 | Schéma | schéma de principe à l'échelle, diagramme de flux, réserve de capacité par entrée |
-| Exports | note de calcul **PDF** aux couleurs de la charte du Tarn (en-tête paramétrable), impression, schéma **DXF R12** (1 unité = 1 m, calques GIRA_*), tableau des résultats copiable vers Excel/Word |
+| Exports | note de calcul **PDF** (en-tête et pied de page paramétrables), impression, schéma **DXF R12** (1 unité = 1 m, calques GIRA_*), tableau des résultats copiable vers Excel/Word |
 | Fichiers | format **.gbs** de Girabase 4 en lecture et en écriture : les anciens projets s'ouvrent directement et un projet enregistré ici s'ouvre dans le logiciel d'origine |
 | Carte IGN | localisation partout en France : photo aérienne et routes de l'IGN, **un clic sur le carrefour** donne centre, anneau existant, branches (route, nom de voie, orientation N/E/S/O, angle Girabase), commune, WGS84 / Lambert-93 / CC (UTM outre-mer) ; export **KML** ; envoi direct dans le calcul |
 | IA (MCP) | `girabase-mcp.exe` : calcul de capacité, lecture/écriture .gbs, analyse de carrefour IGN, conversions de coordonnées et KML à la disposition des assistants d'IA locaux |
@@ -208,3 +210,6 @@ GNU GPL v3 (fichier `LICENSE`), comme le code source d'origine du CEREMA. L'exé
 (PySide6, LGPL v3). Usage interne libre ; en cas de
 diffusion à d'autres services ou collectivités, le code source doit accompagner l'exécutable et rester sous
 GPL. Ce portage n'est ni édité ni validé par le CEREMA.
+
+Girabase Python est un travail personnel, mis à la disposition de toutes les collectivités territoriales
+et de leurs bureaux d'études.

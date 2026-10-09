@@ -108,6 +108,7 @@ class DialogueImport(QDialog):
 TEXTE_A_PROPOS = """
 <h3>Girabase — portage Python</h3>
 <p>Calcul de capacité des carrefours giratoires.</p>
+<p><i>L’intelligence artificielle au service de l’action publique efficiente.</i></p>
 <p>Ce programme est un portage en Python du logiciel <b>GIRABASE 4</b> développé par le CERTU et le
 CETE de l'Ouest, dont le CEREMA a publié le code source sous licence GNU GPL v3
 (<a href="https://github.com/CEREMA/territoires-ville.Girabase">github.com/CEREMA/territoires-ville.Girabase</a>).

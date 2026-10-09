@@ -14,7 +14,7 @@ ESSAIS = 3
 
 
 def creer_gestionnaire(parent: Optional[QObject] = None) -> QNetworkAccessManager:
-    """Gestionnaire réseau : proxy du système (réseau du Département), cache disque de 300 Mo."""
+    """Gestionnaire réseau : proxy du système (réseau de la collectivité), cache disque de 300 Mo."""
     QNetworkProxyFactory.setUseSystemConfiguration(True)
     nam = QNetworkAccessManager(parent)
     cache = QNetworkDiskCache(nam)

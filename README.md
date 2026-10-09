@@ -1,5 +1,7 @@
 # Girabase — fork avec portage Python (version 1.2)
 
+*L’intelligence artificielle au service de l’action publique efficiente.*
+
 > **Ce fork ajoute [Girabase Python](girabase-python/)**, un portage fidèle de GIRABASE 4 qui fonctionne sur
 > Windows 10 et 11 sans installation ni numéro de licence. Il apporte :
 > - le même calcul de capacité, validé sur le cas de référence du guide ;

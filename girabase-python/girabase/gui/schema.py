@@ -14,7 +14,7 @@ from ..formats import niveau_rc
 from ..geometrie import Primitive, emprise, primitives_flux, schema
 from ..modele import Giratoire
 
-# Charte graphique du Tarn : lie-de-vin, orange, vert, bleu pastel
+# Couleurs de Girabase Python : lie-de-vin, orange, vert, bleu pastel
 COULEURS_RC = {"sature": "#7F0541", "faible": "#DD590A", "correct": "#179D87", "surdim": "#5E99C5"}
 
 

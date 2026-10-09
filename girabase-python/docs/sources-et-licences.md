@@ -16,7 +16,7 @@
 Les images et les objets sont lus à la demande pour la zone affichée, sur les services publics de la
 **Géoplateforme de l'IGN** (`data.geopf.fr`) et, en option, sur les tuiles d'**OpenStreetMap**, puis gardés
 dans un cache local (300 Mo au plus). Seule exception : deux petits extraits de la BD TOPO® (deux carrefours
-du Tarn, 15 tronçons) sont embarqués pour l'auto-contrôle hors ligne, et quatre autres servent aux tests du
+réels, 15 tronçons) sont embarqués pour l'auto-contrôle hors ligne, et quatre autres servent aux tests du
 dépôt. Leur source, leur date d'extraction et leur licence sont indiquées dans
 [`girabase/carto/donnees/LISEZMOI.md`](../girabase/carto/donnees/LISEZMOI.md) et
 [`tests/donnees/LISEZMOI.md`](../tests/donnees/LISEZMOI.md).

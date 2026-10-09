@@ -2,6 +2,8 @@
 
 *Version 1.2 — octobre 2026*
 
+*L’intelligence artificielle au service de l’action publique efficiente.*
+
 Girabase calcule la **capacité des carrefours giratoires** : réserve de capacité de chaque entrée, files
 d'attente, temps d'attente, avec les contrôles et les conseils de conception du logiciel d'origine. Ce programme
 reprend **à l'identique** le moteur de **GIRABASE 4** (CERTU / CETE de l'Ouest), dont le CEREMA a publié le code
@@ -263,7 +265,8 @@ un écran de portable ; tout déplié, l'ascenseur prend le relais. L'état de c
   avec son code INSEE. Les coordonnées sont données dans plusieurs systèmes :
   - **WGS84** en degrés-minutes-secondes et en décimal ;
   - **RGF93 Lambert-93** ;
-  - **RGF93 CC**, avec la zone choisie automatiquement (CC44 dans le Tarn) ou à la main ;
+  - **RGF93 CC**, avec la zone choisie automatiquement d'après la latitude (CC44 entre 43,25° et 44,75° N, par
+    exemple) ou à la main ;
   - **outre-mer**, le système légal du territoire : RGAF09 UTM 20N (Antilles), RGFG95 UTM 22N (Guyane),
     RGR92 UTM 40S (La Réunion), RGM04 UTM 38S (Mayotte), RGSPM06 UTM 21N (Saint-Pierre-et-Miquelon).
 
@@ -304,12 +307,14 @@ boutons et des résultats sont choisies pour rester lisibles dans les deux thèm
 |---|---|---|
 | `.gbs` | projet Girabase (géométrie, branches, périodes, trafics) | Girabase Python et **Girabase 4 d'origine** (format identique) |
 | `.gsite` | localisation sur la carte (centre, branches et azimuts, anneau, fond, sources) | Girabase 1.2 (JSON lisible) |
-| `.pdf` | note de calcul aux couleurs de la charte du Tarn, en-tête paramétrable | tout lecteur PDF |
+| `.pdf` | note de calcul, en-tête et pied de page paramétrables | tout lecteur PDF |
 | `.dxf` | schéma DXF R12, 1 unité = 1 m, centre en (0, 0), branche 1 sur l'axe X | AutoCAD, COVADIS, toutes versions |
 | `.kml` | schéma géoréférencé : centre, îlot, bande franchissable, anneau, axes, voies d'entrée et de sortie, îlots séparateurs | Google Earth, QGIS, Géoportail |
 
 **Note de calcul** : *Fichier → Exporter la note de calcul (PDF)* (Ctrl+E) ou *Imprimer* (Ctrl+P). Les
-*Paramètres de la note de calcul* règlent l'organisme, le service, l'auteur et le pied de page.
+*Paramètres de la note de calcul* règlent l'organisme, le service, l'auteur et le pied de page. Par défaut,
+l'en-tête porte « Girabase — capacité des carrefours giratoires » et la devise « L’intelligence artificielle au service de l’action publique efficiente. » :
+remplacez-les par le nom de votre collectivité et de votre service.
 
 **DXF pour AutoCAD / COVADIS** : *Fichier → Exporter le schéma pour AutoCAD (DXF)* (Ctrl+D). Les calques sont
 `GIRA_ILOT_CENTRAL`, `GIRA_BANDE_FRANCH`, `GIRA_ANNEAU`, `GIRA_BORDS_BRANCHES`, `GIRA_ILOTS_SEPARATEURS`,

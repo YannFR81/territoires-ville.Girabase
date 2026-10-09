@@ -102,6 +102,8 @@ jobs:
           {
             echo "Portage Python de **GIRABASE 4** (CERTU/CEREMA) pour Windows 10 et 11, sans installation."
             echo
+            echo "*L’intelligence artificielle au service de l’action publique efficiente.*"
+            echo
             echo "| Fichier | Rôle |"
             echo "|---|---|"
             echo "| \`Girabase.exe\` | logiciel complet, fichier unique à copier puis double-cliquer |"
