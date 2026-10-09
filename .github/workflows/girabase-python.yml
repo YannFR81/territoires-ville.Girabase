@@ -1,7 +1,8 @@
 # Girabase — portage Python (dossier girabase-python/) : tests, puis exécutables Windows 10/11.
 # Les fichiers produits se téléchargent dans l'onglet « Actions » du dépôt, rubrique « Artifacts ».
-# Une étiquette « python-vX.Y.Z » publie en plus une version (onglet « Releases ») avec ces fichiers et les
-# notes de la section X.Y.Z de girabase-python/NOUVEAUTES.md.
+# Publication d'une version (onglet « Releases ») avec ces fichiers et les notes de la section X.Y.Z de
+# girabase-python/NOUVEAUTES.md : onglet Actions › ce workflow › « Run workflow » en cochant « publier »
+# (la version X.Y.Z est celle de girabase-python/pyproject.toml), ou envoi d'une étiquette « python-vX.Y.Z ».
 # Les fichiers VB6 d'origine du CEREMA, à la racine du dépôt, ne sont pas concernés.
 name: Girabase Python — tests et exécutables Windows
 
@@ -16,6 +17,11 @@ on:
     paths:
       - "girabase-python/**"
   workflow_dispatch:
+    inputs:
+      publier:
+        description: "Publier la version de pyproject.toml dans Releases"
+        type: boolean
+        default: false
 
 permissions:
   contents: read
@@ -70,7 +76,7 @@ jobs:
             girabase-python/dist/Guide-utilisateur-Girabase.pdf
 
   publier:
-    if: startsWith(github.ref, 'refs/tags/python-v')
+    if: startsWith(github.ref, 'refs/tags/python-v') || (github.event_name == 'workflow_dispatch' && inputs.publier)
     needs: windows
     runs-on: ubuntu-latest
     permissions:
@@ -85,7 +91,12 @@ jobs:
         env:
           GH_TOKEN: ${{ github.token }}
         run: |
-          version="${GITHUB_REF_NAME#python-v}"
+          if [[ "$GITHUB_REF" == refs/tags/python-v* ]]; then
+            etiquette="$GITHUB_REF_NAME"
+          else
+            etiquette="python-v$(sed -n 's/^version = "\(.*\)"/\1/p' girabase-python/pyproject.toml)"
+          fi
+          version="${etiquette#python-v}"
           awk -v v="## $version" '$0 ~ "^## " { garder = (index($0, v) == 1) ; next } garder' \
             girabase-python/NOUVEAUTES.md > notes.md
           {
@@ -107,5 +118,5 @@ jobs:
             echo
             echo "Licence GNU GPL v3, comme le code d'origine du CEREMA. Ce portage n'est ni édité ni validé par le CEREMA."
           } > notes_completes.md
-          gh release create "$GITHUB_REF_NAME" livraison/* --title "Girabase Python $version" \
-            --notes-file notes_completes.md --verify-tag
+          gh release create "$etiquette" livraison/* --target "$GITHUB_SHA" --title "Girabase Python $version" \
+            --notes-file notes_completes.md
