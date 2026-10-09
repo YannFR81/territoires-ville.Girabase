@@ -1,0 +1,30 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "girabase"
+version = "1.2.0"
+description = "Calcul de capacité des carrefours giratoires — portage Python de GIRABASE 4 (CERTU/CEREMA)"
+readme = "README.md"
+license = { text = "GPL-3.0-or-later" }
+requires-python = ">=3.10"
+dependencies = ["PySide6-Essentials>=6.6"]
+
+[project.scripts]
+girabase-mcp = "girabase.mcp.serveur:main"
+
+[project.optional-dependencies]
+dev = ["pytest>=7", "pyinstaller>=6", "ezdxf>=1.1", "numpy"]
+
+[project.gui-scripts]
+girabase = "girabase.gui.app:main"
+
+[tool.setuptools.packages.find]
+include = ["girabase*"]
+
+[tool.setuptools.package-data]
+girabase = ["ressources/*", "carto/donnees/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]

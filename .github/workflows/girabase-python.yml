@@ -1,0 +1,65 @@
+# Girabase — portage Python (dossier girabase-python/) : tests, puis exécutables Windows 10/11.
+# Les fichiers produits se téléchargent dans l'onglet « Actions » du dépôt, rubrique « Artifacts ».
+# Les fichiers VB6 d'origine du CEREMA, à la racine du dépôt, ne sont pas concernés.
+name: Girabase Python — tests et exécutables Windows
+
+on:
+  push:
+    paths:
+      - "girabase-python/**"
+      - ".github/workflows/girabase-python.yml"
+  pull_request:
+    paths:
+      - "girabase-python/**"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  windows:
+    runs-on: windows-latest
+    defaults:
+      run:
+        working-directory: girabase-python
+        shell: pwsh
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Dépendances
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt
+      - name: Tests
+        env:
+          QT_QPA_PLATFORM: offscreen
+        run: python -m pytest -q
+      - name: Exécutables
+        run: |
+          pyinstaller --noconfirm --clean girabase.spec
+          pyinstaller --noconfirm girabase_fichier_unique.spec
+          pyinstaller --noconfirm girabase_mcp.spec
+          python outils/creer_mcpb.py dist/girabase-mcp.exe dist/girabase.mcpb
+          python outils/guide_pdf.py dist/Guide-utilisateur-Girabase.pdf
+          Compress-Archive -Path dist/Girabase -DestinationPath dist/Girabase-Windows.zip -Force
+      - name: Auto-contrôle de l'exécutable
+        run: |
+          $p = Start-Process -FilePath dist/Girabase.exe -ArgumentList "--autotest", "$PWD/autotest" -Wait -PassThru
+          Get-Content autotest/autotest_girabase.txt
+          if ($p.ExitCode -ne 0) { throw "Auto-contrôle non conforme" }
+      - name: Serveur MCP
+        run: |
+          $init = '{"jsonrpc":"2.0","id":1,"method":"initialize","params":{"protocolVersion":"2025-06-18"}}'
+          $liste = '{"jsonrpc":"2.0","id":2,"method":"tools/list"}'
+          $rep = "$init`n$liste`n" | dist/girabase-mcp.exe
+          $rep
+          if (-not ($rep -match '"calculer_capacite"')) { throw "Serveur MCP sans outils" }
+      - uses: actions/upload-artifact@v4
+        with:
+          name: Girabase-Python-Windows
+          path: |
+            girabase-python/dist/Girabase.exe
+            girabase-python/dist/Girabase-Windows.zip
+            girabase-python/dist/girabase-mcp.exe
+            girabase-python/dist/girabase.mcpb
+            girabase-python/dist/Guide-utilisateur-Girabase.pdf

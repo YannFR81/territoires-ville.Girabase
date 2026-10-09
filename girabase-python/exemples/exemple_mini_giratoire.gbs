@@ -1,0 +1,22 @@
+"Girabase","Version 4"
+"Variante 1",#2026-10-09#
+"Exemple fictif - mini-giratoire de centre-bourg",2
+4,1,0
+0,2,7.5
+"Exemple pédagogique, données fictives"
+"BRANCHES"
+"Avenue de la Gare",0,#FALSE#,#FALSE#
+#FALSE#,3.5,4,1.5,4
+"Rue du Marché",100,#FALSE#,#FALSE#
+#FALSE#,3.2,4,1,3.8
+"Avenue de l'Église",190,#FALSE#,#FALSE#
+#FALSE#,3.5,4,1.5,4
+"Rue des Écoles",280,#FALSE#,#FALSE#
+#FALSE#,0,4,0,3.5
+"TRAFICS"
+"HPS",#TRUE#,13725471
+"0120 0080 0150 0200"
+"0000 0150 0260 0060"
+"0120 0000 0110 0040"
+"0240 0130 0000 0070"
+"VIDE VIDE VIDE VIDE"
