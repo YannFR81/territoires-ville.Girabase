@@ -1,10 +1,14 @@
 # Girabase — portage Python (dossier girabase-python/) : tests, puis exécutables Windows 10/11.
 # Les fichiers produits se téléchargent dans l'onglet « Actions » du dépôt, rubrique « Artifacts ».
+# Une étiquette « python-vX.Y.Z » publie en plus une version (onglet « Releases ») avec ces fichiers et les
+# notes de la section X.Y.Z de girabase-python/NOUVEAUTES.md.
 # Les fichiers VB6 d'origine du CEREMA, à la racine du dépôt, ne sont pas concernés.
 name: Girabase Python — tests et exécutables Windows
 
 on:
   push:
+    branches: ["**"]
+    tags: ["python-v*"]
     paths:
       - "girabase-python/**"
       - ".github/workflows/girabase-python.yml"
@@ -24,8 +28,8 @@ jobs:
         working-directory: girabase-python
         shell: pwsh
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Dépendances
@@ -63,3 +67,44 @@ jobs:
             girabase-python/dist/girabase-mcp.exe
             girabase-python/dist/girabase.mcpb
             girabase-python/dist/Guide-utilisateur-Girabase.pdf
+
+  publier:
+    if: startsWith(github.ref, 'refs/tags/python-v')
+    needs: windows
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v5
+      - uses: actions/download-artifact@v4
+        with:
+          name: Girabase-Python-Windows
+          path: livraison
+      - name: Publier la version
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          version="${GITHUB_REF_NAME#python-v}"
+          awk -v v="## $version" '$0 ~ "^## " { garder = (index($0, v) == 1) ; next } garder' \
+            girabase-python/NOUVEAUTES.md > notes.md
+          {
+            echo "Portage Python de **GIRABASE 4** (CERTU/CEREMA) pour Windows 10 et 11, sans installation."
+            echo
+            echo "| Fichier | Rôle |"
+            echo "|---|---|"
+            echo "| \`Girabase.exe\` | logiciel complet, fichier unique à copier puis double-cliquer |"
+            echo "| \`Girabase-Windows.zip\` | version dossier (démarrage plus rapide ; si l'antivirus bloque le fichier unique) |"
+            echo "| \`girabase-mcp.exe\` | serveur MCP pour les assistants d'IA locaux |"
+            echo "| \`girabase.mcpb\` | extension Claude Desktop (double-clic) |"
+            echo "| \`Guide-utilisateur-Girabase.pdf\` | guide d'utilisation imprimable |"
+            echo
+            echo "### Nouveautés"
+            cat notes.md
+            echo
+            echo "Contrôle : \`Girabase.exe --autotest C:\\temp\\essai\` recalcule le cas de référence du guide et écrit « CONFORME »."
+            echo "Exécutable non signé : au premier lancement, SmartScreen → *Informations complémentaires* → *Exécuter quand même*."
+            echo
+            echo "Licence GNU GPL v3, comme le code d'origine du CEREMA. Ce portage n'est ni édité ni validé par le CEREMA."
+          } > notes_completes.md
+          gh release create "$GITHUB_REF_NAME" livraison/* --title "Girabase Python $version" \
+            --notes-file notes_completes.md --verify-tag

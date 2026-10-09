@@ -12,7 +12,7 @@ depuis 2021 et ne fonctionne plus sans manipulation (protection, contrôles Acti
 résultats du cas de référence du guide Girabase 4 sont reproduits à l'identique.
 
 **Documentation :** [guide d'utilisation](docs/guide-utilisateur.md) (aussi dans le logiciel, touche F1) ·
-[sources des données et licences](docs/sources-et-licences.md).
+[sources des données et licences](docs/sources-et-licences.md) · [nouveautés](NOUVEAUTES.md).
 
 **Téléchargements** : [dernière version publiée](https://github.com/YannFR81/territoires-ville.Girabase/releases/latest)
 (onglet *Releases* du dépôt).
