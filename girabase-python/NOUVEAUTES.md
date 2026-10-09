@@ -3,6 +3,7 @@
 ## 1.2.1 — 9 octobre 2026
 
 - Girabase Python s'adresse à toutes les collectivités territoriales. Les textes ont été rendus génériques.
+- Guide PDF : correction des caractères remplacés par des pavés noirs dans le fichier compilé sous Windows.
 - La note de calcul porte par défaut l'en-tête « Girabase — capacité des carrefours giratoires » et la devise
   « L’intelligence artificielle au service de l’action publique efficiente. ». L'organisme, le service et le pied de page restent modifiables
   dans *Fichier → Paramètres de la note de calcul*.

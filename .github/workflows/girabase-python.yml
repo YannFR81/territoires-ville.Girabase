@@ -3,6 +3,7 @@
 # Publication d'une version (onglet « Releases ») avec ces fichiers et les notes de la section X.Y.Z de
 # girabase-python/NOUVEAUTES.md : onglet Actions › ce workflow › « Run workflow » en cochant « publier »
 # (la version X.Y.Z est celle de girabase-python/pyproject.toml), ou envoi d'une étiquette « python-vX.Y.Z ».
+# Si la version existe déjà, ses fichiers sont remplacés et ses notes mises à jour.
 # Les fichiers VB6 d'origine du CEREMA, à la racine du dépôt, ne sont pas concernés.
 name: Girabase Python — tests et exécutables Windows
 
@@ -39,8 +40,8 @@ jobs:
         with:
           python-version: "3.12"
       - name: Dépendances
-        # pyproj sert seulement aux tests : contrôle des projections contre PROJ
-        run: python -m pip install -r requirements.txt -r requirements-dev.txt pyproj
+        # pyproj et pypdf servent seulement aux contrôles : projections contre PROJ, texte du guide PDF
+        run: python -m pip install -r requirements.txt -r requirements-dev.txt pyproj pypdf
       - name: Tests
         env:
           QT_QPA_PLATFORM: offscreen
@@ -53,6 +54,10 @@ jobs:
           python outils/creer_mcpb.py dist/girabase-mcp.exe dist/girabase.mcpb
           python outils/guide_pdf.py dist/Guide-utilisateur-Girabase.pdf
           Compress-Archive -Path dist/Girabase -DestinationPath dist/Girabase-Windows.zip -Force
+      - name: Guide PDF lisible
+        env:
+          PYTHONIOENCODING: utf-8
+        run: python outils/verifier_guide_pdf.py dist/Guide-utilisateur-Girabase.pdf
       - name: Auto-contrôle de l'exécutable
         run: |
           $p = Start-Process -FilePath dist/Girabase.exe -ArgumentList "--autotest", "$PWD/autotest" -Wait -PassThru
@@ -120,5 +125,10 @@ jobs:
             echo
             echo "Licence GNU GPL v3, comme le code d'origine du CEREMA. Ce portage n'est ni édité ni validé par le CEREMA."
           } > notes_completes.md
-          gh release create "$etiquette" livraison/* --target "$GITHUB_SHA" --title "Girabase Python $version" \
-            --notes-file notes_completes.md
+          if gh release view "$etiquette" > /dev/null 2>&1; then
+            gh release upload "$etiquette" livraison/* --clobber
+            gh release edit "$etiquette" --notes-file notes_completes.md
+          else
+            gh release create "$etiquette" livraison/* --target "$GITHUB_SHA" --title "Girabase Python $version" \
+              --notes-file notes_completes.md
+          fi

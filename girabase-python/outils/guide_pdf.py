@@ -6,17 +6,35 @@ import os
 import sys
 from pathlib import Path
 
-os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
+# Sous Windows, le mode « offscreen » de Qt ne trouve aucune police : le texte sort en pavés noirs. On garde
+# donc la plateforme normale de Windows, et on indique le dossier des polices si « offscreen » est imposé.
+if sys.platform == "win32":
+    if os.environ.get("QT_QPA_PLATFORM") == "offscreen":
+        os.environ.setdefault("QT_QPA_FONTDIR", os.path.join(os.environ.get("WINDIR", r"C:\Windows"), "Fonts"))
+else:
+    os.environ.setdefault("QT_QPA_PLATFORM", "offscreen")
 RACINE = Path(__file__).resolve().parent.parent
 
 from PySide6.QtCore import QMarginsF, QSizeF, QUrl         # noqa: E402
-from PySide6.QtGui import (QFont, QImage, QPageLayout, QPageSize, QPdfWriter, QTextCursor,  # noqa: E402
-                           QTextDocument)
+from PySide6.QtGui import (QFont, QFontDatabase, QFontInfo, QFontMetrics, QImage, QPageLayout,  # noqa: E402
+                           QPageSize, QPdfWriter, QTextCursor, QTextDocument)
 from PySide6.QtWidgets import QApplication                  # noqa: E402
+
+
+def verifier_polices(police: QFont) -> None:
+    """Refuse de produire un PDF illisible : il faut une vraie police qui contient les lettres accentuées."""
+    familles = QFontDatabase.families()
+    m = QFontMetrics(police)
+    manquants = [c for c in "AaÉéèàçœ’«»" if not m.inFontUcs4(ord(c))]
+    if not familles or manquants:
+        raise SystemExit(f"Polices indisponibles ({len(familles)} familles, police utilisée : "
+                         f"{QFontInfo(police).family()!r}, caractères absents : {''.join(manquants)!r}) : "
+                         "le PDF serait illisible.")
 
 
 def main(sortie: str) -> None:
     app = QApplication.instance() or QApplication([])
+    verifier_polices(QFont("Arial", 11))
     docs = RACINE / "docs"
     texte = (docs / "guide-utilisateur.md").read_text(encoding="utf-8")
     doc = QTextDocument()
